@@ -19,6 +19,7 @@ guest = [
     "-drive", "if=pflash,format=raw,unit=1,file=firmware-vars.fd",
     "-chardev", "socket,id=chrtpm,path=tpm-control.sock",
     "-tpmdev", "emulator,id=tpm0,chardev=chrtpm", "-device", "tpm-tis,tpmdev=tpm0",
+    "-device", "qemu-xhci", "-device", "usb-tablet",
     "-display", "none", "-vga", "std", "-rtc", "base=localtime",
     "-drive", "if=none,id=system,file=clean.qcow2,format=qcow2",
     "-device", "ide-hd,drive=system,bus=ide.0,bootindex=0",
@@ -101,6 +102,27 @@ def setup_display(stream):
     return result or ["unclassified"]
 
 
+def skip_oobe_update(stream):
+    screenshot = Path("setup.ppm")
+    with screenshot.open("rb") as image:
+        if image.readline() != b"P6\n" or image.readline().split() != [b"1280", b"800"]:
+            return False
+    scan = subprocess.run(["tesseract", str(screenshot), "stdout", "--psm", "11"],
+                          capture_output=True, timeout=10)
+    words = set(re.findall(rb"[a-z]+", scan.stdout.lower()))
+    if scan.returncode != 0 or not {b"oobezdp", b"skip", b"wrong"} <= words:
+        return False
+    # This is the observed Skip button on the 1280 x 800 English OOBEZDP screen.
+    qmp(stream, "input-send-event", events=[
+        {"type": "abs", "data": {"axis": axis, "value": round(32767 * pixel / (size - 1))}}
+        for axis, pixel, size in (("x", 914, 1280), ("y", 667, 800))
+    ])
+    for down in (True, False):
+        qmp(stream, "input-send-event", events=[{"type": "btn", "data": {"down": down, "button": "left"}}])
+        time.sleep(0.12)
+    return True
+
+
 def main(process):
     with socket.socket(socket.AF_UNIX) as monitor:
         monitor.settimeout(8)
@@ -120,13 +142,18 @@ def main(process):
             start = time.monotonic()
             preflight = None
             setup_samples = []
-            diagnostic = iter([3, 6, 10, 15, 23, 32, 90, 220, 380, 540, 690, 835, 925, 1080, 1240, 1400, 1480])
+            diagnostic = iter([3, 6, 10, 15, 23, 32, 90, 220, 380, *range(480, 1490, 60)])
             next_diagnostic = next(diagnostic)
+            oobe_update_skipped = False
             done = 0
             while True:
                 elapsed = time.monotonic() - start
                 if not preflight and elapsed >= next_diagnostic:
                     states = setup_display(stream)
+                    if elapsed >= 480 and not oobe_update_skipped:
+                        oobe_update_skipped = skip_oobe_update(stream)
+                        if oobe_update_skipped:
+                            states.append("oobe_update_skipped")
                     setup_samples.append({"seconds": next_diagnostic, "screen": states})
                     notice(f"boot at {next_diagnostic} seconds", setup_samples[-1])
                     # A prompt after the installer restarts must time out to the installed disk.
