@@ -169,13 +169,13 @@ The earlier run verified sign-in and Undo. Its provider response remained unveri
 
 **Windows 11 x64 portable engine.** The portable Headroom 0.45.0 engine reached Ready in 70.420 seconds on clean Windows 11 24H2 x64. The native core loaded offline. The engine stopped normally and released its port. The engine-only ZIP had 198,544,748 bytes. The test used a standard desktop user token. [Evidence](../proofs/pennypinch-windows11-portable-engine.json)
 
-**Clean Windows 11 x64 desktop.** The clean installation and client flow remain `not_tested`. GitHub's standard Windows 11 desktop image uses ARM64. [Standard images](https://github.com/actions/runner-images#available-images) · [Larger-runner images](https://docs.github.com/en/actions/reference/runners/larger-runners#runner-images)
+**Clean Windows 11 x64 desktop.** The published v0.1.1 installer opened PennyPinch as a standard user on clean Windows 11 24H2 x64. Headroom reached Ready in 79.842 seconds offline. Stop ended the engine in 2.099 seconds. Normal exit closed the local route. The guest had WebView2 before installation. [Evidence](../proofs/pennypinch-windows11-installed-lifecycle.json)
 
 The 15 November private-repository check estimated ten standard Windows minutes from the reported $0.10 allowance. On 23 November, the GitHub API reported PennyPinch as public. Standard hosted jobs now run outside that allowance. The standard Windows x64 images still run Windows Server. The standard Windows 11 desktop image uses ARM64. Use the Windows 11 x64 guest for installed app verification. [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions) · [Runner images](https://github.com/actions/runner-images#available-images)
 
 CircleCI was also checked on 16 November 2026. The private repository can use the Free plan's 30,000 monthly credits. At 40 credits per minute, `windows.medium` would yield roughly 750 minutes if it used the entire quota. The official hosted Windows images are Server 2019 and Server 2022. They can cover builds and Server checks. Windows 11 x64 desktop acceptance needs its own environment. A self-hosted runner needs a host supplied by the user. [Windows images](https://circleci.com/docs/guides/execute/using-windows/) · [Free plan](https://circleci.com/pricing/) · [Credit rates](https://circleci.com/pricing/price-list/) · [Runner scope](https://circleci.com/docs/runner/runner-overview/)
 
-Verify the installed app on a clean Windows 11 x64 desktop. Record the connection, one real request, Undo and the tray flow in H037. Record the signed update and rollback in H042.
+Verify the client connection, one real request, Undo and the tray flow. Record the signed update and rollback in H042.
 
 H048 and H049 track macOS and Linux ports and native CI. Each has its own workflow and acceptance evidence.
 

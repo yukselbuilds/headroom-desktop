@@ -1,0 +1,87 @@
+{
+  "checks": {
+    "backend_port_released": true,
+    "current_user_nsis": true,
+    "engine_ready": true,
+    "engine_stopped_with_stable_route": true,
+    "installed_file_digests_match": true,
+    "installed_python_processes_ended": true,
+    "native_window": true,
+    "no_previous_installation": true,
+    "normal_desktop_exit": true,
+    "normal_interactive_token": true,
+    "owned_loopback_listener": true,
+    "stable_listener_closed_on_exit": true,
+    "start_action_clicked": true,
+    "started_stopped": true
+  },
+  "ci_sha256": {
+    ".github/pennypinch-win11/Autounattend.xml": "cf0ddf5380879c5debf925ff34c52fd4e31b13387d8250269ca18db43398c2b2",
+    ".github/pennypinch-win11/candidate.json": "048484526e6f460a3d8f9f18470b7ca5bc28d69302be5064578ef4c7a8101b4c",
+    ".github/pennypinch-win11/desktop.ps1": "bf0dc536b12149f931dd73a7764a813ebc76f6dee1b5700ab07a79f9d8c2af06",
+    ".github/pennypinch-win11/engine-processes.py": "165f467cdec884ba8decad8995ebcd8f38614ac44f6d6063dfeba6c97580ccd8",
+    ".github/pennypinch-win11/guest.ps1": "4139b676baede57b60ed27c2f59dd9a8ca6bae7c60f614781d6ac3c428dcfd52",
+    ".github/pennypinch-win11/host.py": "a4b89e94c52b78b9dc7737399e6d6294c4d821b9c601717711c760c52ecd9a80",
+    ".github/pennypinch-win11/predecessor.exe": "930dea11aa089ffaccf7f9cea455f8e1d4dd408b85502d01b036a1dc2a2a4d51",
+    ".github/pennypinch-win11/stable-update.ps1": "0b24766c5fb3de1cd89e26c6541d2e8a8656b53b1470f947a9bdfa8fb150d402",
+    ".github/workflows/windows11-stable-011.yml": "7d173d4685c4f3dad52388b977c677f874e29132a2c5eb0f877663d9c6b7ebf4"
+  },
+  "commit": "a776fb167c34adccf754a9a60dbf45fe66024ac3",
+  "completed_at": "2026-11-28T13:28:26Z",
+  "duration_seconds": 413.919,
+  "engine_version": "0.45.0",
+  "environment_checks": {
+    "microsoft_setup_signature_valid": true,
+    "network_disconnected": true,
+    "network_ready_for_signed_update": true,
+    "no_dev_tools_in_path": true
+  },
+  "iso_sha256": "67cec5865eaa037a72ddc633a717a10a2bed50778862267223ddb9c60ef5da68",
+  "job_conclusion": "failure",
+  "limits": {
+    "client_request_and_tray": "not_tested",
+    "development_agent_token_savings": "unmeasured",
+    "provider_model_calls": 0,
+    "signed_package_and_rollback": "test_deadline",
+    "webview2_bootstrap_without_runtime": "not_tested"
+  },
+  "package": {
+    "archive_sha256": "00062e3a534ae582edd62373205a58174c307fbcfac025edb79bd35514ea5596",
+    "executable_sha256": "41cdd046f503634a6895d8d200d2aa2bf4fb21ee8b6990413f00f909bf1db214",
+    "helper_sha256": "2fc0dc0c114eaa194a796815a514cdc9989653649a44c9e04d2133e4eca049de",
+    "installer_sha256": "0e09f8e9e5e48570631d6742dec4b3cfe91f6e3eb45765c2b7a1cf96ce22b49c",
+    "manifest_sha256": "15e1a28252274aae7278e249e8d3d9fbe2a50bc259cd3bb028cd406ce698189f",
+    "predecessor_sha256": "930dea11aa089ffaccf7f9cea455f8e1d4dd408b85502d01b036a1dc2a2a4d51",
+    "predecessor_version": "0.1.0",
+    "resource_receipt_sha256": "7dbcf84d77febd5c131287b4dab4c8c1125a64b86389677ddd0c4fc58a464f80",
+    "source_commit": "1a94cc133ed573a1218b1c321dab6f0aa390274f",
+    "version": "0.1.1"
+  },
+  "readiness": {
+    "ready": true,
+    "rust_core": "loaded",
+    "upstream_probe_enabled": false
+  },
+  "ready_seconds": 79.842,
+  "run": "https://github.com/yukselbuilds/PennyPinch/actions/runs/46147672114",
+  "runner": "ubuntu-24.04",
+  "stop_seconds": 2.099,
+  "verified": {
+    "clean_install": true,
+    "installed_engine_controls": true,
+    "normal_exit": true,
+    "signed_manifest": true
+  },
+  "webview2_existed_before_install": [
+    "122.0.2365.106"
+  ],
+  "windows": {
+    "architecture": 9,
+    "build": 26100,
+    "display_version": "24H2",
+    "edition": "EnterpriseSEval",
+    "secure_boot": true,
+    "tpm2": true,
+    "ubr": 1742
+  }
+}

@@ -156,7 +156,9 @@ GitHub lists free standard hosted compute for public repositories. Standard Wind
 
 The lead agent completed H006 with the portable engine from the published v0.1.1 installer. The portable Headroom 0.45.0 engine reached Ready in 70.420 seconds on clean Windows 11 24H2 x64. The native core loaded offline. The engine stopped normally and released its port. The engine-only ZIP had 198,544,748 bytes. The test used a standard desktop user token. [GitHub run](https://github.com/yukselbuilds/PennyPinch/actions/runs/46140058906) · [Evidence](proofs/pennypinch-windows11-portable-engine.json)
 
-The full Windows 11 run reached the system disk and stopped before the desktop test reported. Use the first desktop sign-in to verify the installed app and the signed update. [Desktop run](https://github.com/yukselbuilds/PennyPinch/actions/runs/46126574469)
+The full Windows 11 run reached the system disk and passed the clean install and offline engine lifecycle. The app verified the stable manifest. The download test reached its deadline. [First desktop run](https://github.com/yukselbuilds/PennyPinch/actions/runs/46147672114) · [Evidence](proofs/pennypinch-windows11-installed-lifecycle.json)
+
+The retest waits for the app download and extraction limits. The earlier retest timed out before first sign-in. The new run saves the guest screen if setup stops. [Desktop retest](https://github.com/yukselbuilds/PennyPinch/actions/runs/46152291961)
 
 ### Windows release evidence
 

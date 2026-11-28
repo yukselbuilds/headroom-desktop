@@ -84,7 +84,7 @@ See the [versioned compatibility records](compatibility/clients.json) for status
 | **Windows 10 22H2 x64** | v0.1.1 upgraded preview.8 and kept its preferences. The installed app applied a signed update from GitHub Pages and restored the earlier version. [Release evidence](docs/proofs/pennypinch-windows10-stable-release.json) | Live Anthropic and OpenAI API-key validation have separate requirements. |
 | **macOS ARM64** | On macOS 26.7.2, the test package started Headroom 0.45.0. A controlled Codex Desktop turn returned a response and stored local usage. The package exited normally. [Package evidence](docs/proofs/headroom-045-managed-packages.json) | Production signing, notarization, live provider traffic, and release delivery require separate checks. |
 | **Ubuntu 24.04 x64** | The Debian package installed. The app started, stopped, and restarted Headroom 0.45.0 under Xvfb. Package purge retained the separate user state. [Linux validation](docs/validation/linux.md) | Live provider use and public Linux distribution require separate checks. |
-| **Windows 11 x64** | The portable engine passed offline on Windows 11 24H2. Clean desktop verification remains open. | [Evidence](docs/proofs/pennypinch-windows11-portable-engine.json) |
+| **Windows 11 24H2 x64** | Clean install, offline engine controls and normal exit passed. [Evidence](docs/proofs/pennypinch-windows11-installed-lifecycle.json) | Client, tray and signed update verification remain open. |
 
 The current source pins Headroom 0.45.0. The upgrade record covers the Windows 10 package and the direct engine checks.
 [Engine verification](docs/proofs/headroom-045-upgrade.json) · [Full platform status](docs/validation/desktop-platforms.md)
