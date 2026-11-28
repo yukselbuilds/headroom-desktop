@@ -159,6 +159,7 @@ def main(process):
                     raise RuntimeError("vm_exited_before_receipt")
                 if not preflight and elapsed >= BOOT_LIMIT_SECONDS:
                     notice("setup", {"samples": setup_samples, "preflight_after_seconds": None})
+                    qmp(stream, "screendump", filename=str(Path("setup-timeout.ppm").resolve()))
                     raise RuntimeError("guest_timeout_before_baseline")
                 if preflight and time.monotonic() - preflight >= INSTALLED_TEST_LIMIT_SECONDS:
                     raise RuntimeError("guest_timeout_after_baseline")

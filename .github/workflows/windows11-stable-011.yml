@@ -87,3 +87,11 @@ jobs:
           done
           test -S tpm-control.sock
           python3 "$GITHUB_WORKSPACE/.github/pennypinch-win11/host.py"
+      - name: Save the blocked Windows Setup screen
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: windows11-setup-screen
+          path: ${{ runner.temp }}/pennypinch-win11/setup-timeout.ppm
+          if-no-files-found: ignore
+          retention-days: 1
