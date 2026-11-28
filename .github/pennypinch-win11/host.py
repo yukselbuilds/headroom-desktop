@@ -13,7 +13,7 @@ INSTALLED_TEST_LIMIT_SECONDS = 1230
 ANNOTATED_EVENTS = {"boot", "specialize", "guest_entry", "setup", "before", "runtime", "installed", "ready", "exited", "complete", "duration", "host problem"}
 guest = [
     "qemu-system-x86_64", "-enable-kvm", "-machine", "q35,smm=on", "-cpu", "host",
-    "-smp", "4,sockets=1,cores=4,threads=1", "-m", "8192", "-S",
+    "-smp", "4", "-m", "8192", "-S",
     "-global", "driver=cfi.pflash01,property=secure,value=on",
     "-drive", "if=pflash,format=raw,unit=0,file=/usr/share/OVMF/OVMF_CODE_4M.secboot.fd,readonly=on",
     "-drive", "if=pflash,format=raw,unit=1,file=firmware-vars.fd",
@@ -145,8 +145,10 @@ def main(process):
                         if event == b"before":
                             assert not preflight and result["preflight"]["status"] == "ready"
                             notice("setup", {"samples": setup_samples, "preflight_after_seconds": round(elapsed, 3)})
-                            qmp(stream, "set_link", name="guestnic", up=True)
                             preflight = time.monotonic()
+                        if event == b"exited":
+                            assert preflight and result["checks"]["normal_desktop_exit"]
+                            qmp(stream, "set_link", name="guestnic", up=True)
                         if event == b"complete":
                             notice("duration", {"guest_seconds": round(time.monotonic() - start, 3)})
                             if not preflight:

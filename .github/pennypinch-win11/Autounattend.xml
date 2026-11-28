@@ -74,7 +74,7 @@
       <FirstLogonCommands>
         <SynchronousCommand wcm:action="add">
           <Order>1</Order>
-          <CommandLine>powershell.exe -NoProfile -Command "$r=(Get-Volume -FileSystemLabel PPAUDIT).DriveLetter; Start-Process powershell.exe ('-NoLogo -NoProfile -ExecutionPolicy Bypass -File ' + $r + ':\guest.ps1')"</CommandLine>
+          <CommandLine>cmd.exe /d /c for %d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do @if exist %d:\guest.ps1 powershell.exe -NoProfile -ExecutionPolicy Bypass -File %d:\guest.ps1</CommandLine>
           <Description>Verify PennyPinch on clean Windows 11 x64</Description>
         </SynchronousCommand>
       </FirstLogonCommands>
