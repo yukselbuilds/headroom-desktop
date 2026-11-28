@@ -86,8 +86,37 @@ function Test-StableUpdate {
             catch { $false }
         })) { throw 'signed_stable_release_unavailable' }
         $result.update.checks.signed_production_manifest = $true
+        $result.phase = 'download_update'
         if (!(Wait-For 25 { Click-UpdateButton 'Download and verify' $section })) { throw 'update_download_button_missing' }
-        if (!(Wait-For 105 { try { (Update-Snapshot).can_apply -eq $true } catch { $false } })) { throw 'package_not_verified' }
+        $downloadTimer = [Diagnostics.Stopwatch]::StartNew()
+        # The updater allows 300 seconds for download and 90 seconds for extraction.
+        $download = Wait-For 420 { Invoke-Page @'
+(() => {
+  const root = document.querySelector('section[aria-labelledby=updates-title]');
+  if (!root) return null;
+  const alert = root.querySelector('[role=alert]')?.textContent?.trim();
+  const errors = {
+    'The trusted update source could not be reached.': 'source_failed',
+    'The package could not be written to the app directory.': 'storage_failed',
+    'The download was interrupted. You can retry.': 'download_failed',
+    'The package did not match the signed release.': 'integrity_failed',
+    'The update package could not be prepared. Check available disk space and retry.': 'preparation_failed',
+    'The update response could not be validated.': 'invalid_response',
+    'The update status could not be read.': 'request_failed',
+    'The selected update changed. Check again.': 'candidate_changed',
+    'Another update operation is running. Refresh the status.': 'busy',
+  };
+  if (alert) return Object.hasOwn(errors, alert) ? errors[alert] : 'other_alert';
+  const status = root.querySelector('[role=status]')?.textContent?.trim();
+  if (status === 'Package verified and ready for this session.') return 'ready';
+  if (status === 'Package verified. Waiting for the engine to stop.') return 'waiting_for_engine';
+  return null;
+})()
+'@
+        }
+        $result.update.download_seconds = [math]::Round($downloadTimer.Elapsed.TotalSeconds, 3)
+        $result.update.download_result = if ($download) { $download } else { 'timeout' }
+        if ($download -cne 'ready' -or !(Update-Snapshot).can_apply) { throw 'package_not_verified' }
         $result.update.checks.signed_package_verified = $true
         $result.phase = 'install_update'
         if (!(Wait-For 25 { Click-UpdateButton 'Update and restart' $section }) -or
